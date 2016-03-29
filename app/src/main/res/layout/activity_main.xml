@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.anapp.bluecontrol.MainActivity"
+    android:background="#f0f0f6">
+
+    <TextView
+        android:id="@+id/textEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Multimeter"
+        android:textColor="#000000"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignLeft="@+id/textEdit"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_below="@+id/textEdit" >-->
+
+    <!--</LinearLayout>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+  <!--/>-->
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/measurementButton"
+        android:text="@string/startMeasurement"
+        android:onClick="startMeasurement"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/textEdit"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/measurementResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Result"
+        android:textColor="#0000FF"
+        android:textSize="35sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/currentResult"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Current"-->
+        <!--android:textColor="#0000FF"-->
+        <!--android:textSize="25sp"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:layout_below="@+id/voltageResult"-->
+        <!--android:layout_alignStart="@+id/voltageResult"-->
+        <!--android:layout_toStartOf="@+id/measurementButton" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/resistanceResult"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Resistance"-->
+        <!--android:textColor="#0000FF"-->
+        <!--android:textSize="25sp"-->
+        <!--android:layout_below="@+id/currentResult"-->
+        <!--android:layout_marginTop="65dp"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_alignEnd="@+id/currentResult" />-->
+
+</RelativeLayout>

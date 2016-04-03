@@ -24,20 +24,19 @@ public class BluetoothConnector extends AppCompatActivity {
     private InputStream inputStream = null;
     private String message = "", result;
     TextView resultTextView;
-//    TextView currentResultTextView;
+    //    TextView currentResultTextView;
 //    TextView resistanceResultTextView;
     Thread receiveThread;
     private int messageLength = 9;
     private boolean messageReceived = false;
+
     // Well known SPP UUID
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
 
     BluetoothConnector (Activity activity, BluetoothAdapter bluetoothAdapter){
 
         resultTextView = (TextView) activity.findViewById(R.id.measurementResult);
-//        currentResultTextView = (TextView) activity.findViewById(R.id.currentResult);
-//        resistanceResultTextView = (TextView) activity.findViewById(R.id.resistanceResult);
+
         BTAdapter = bluetoothAdapter;
     }
 
@@ -165,6 +164,16 @@ public class BluetoothConnector extends AppCompatActivity {
         }
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case MainActivity.REQUEST_CONNECT_DEVICE_SECURE:
+                // When DeviceListActivity returns with a device to connect
+                if (resultCode == Activity.RESULT_OK) {
+                    connectDevice(data, true);
+                }
+                break;
+        }
+    }
 
     public void connectDevice(Intent data, boolean secure) {
         // Get the device MAC address

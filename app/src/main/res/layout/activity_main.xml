@@ -6,79 +6,38 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.anapp.bluecontrol.MainActivity"
-    android:background="#f0f0f6">
+    tools:context="conor.ie.dcu.multimeterapp.MainActivity"
+    android:background="#0b0b0b">
 
-    <TextView
-        android:id="@+id/textEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Multimeter"
-        android:textColor="#000000"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignLeft="@+id/textEdit"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_below="@+id/textEdit" >-->
-
-    <!--</LinearLayout>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textView1"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentLeft="true"-->
-  <!--/>-->
-
-    <Button
+    <Switch
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/measurementButton"
         android:text="@string/startMeasurement"
         android:onClick="startMeasurement"
-        android:layout_marginTop="55dp"
-        android:layout_below="@+id/textEdit"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="182dp"
+        android:checked="false"
+        android:thumb="@+drawable/switch_thumb"
+        android:track="@+drawable/switch_bg"/>
 
     <TextView
         android:id="@+id/measurementResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Result"
-        android:textColor="#0000FF"
-        android:textSize="35sp"
-        android:layout_centerVertical="true"
+        android:textColor="#2a8000"
+        android:textSize="55sp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/currentResult"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Current"-->
-        <!--android:textColor="#0000FF"-->
-        <!--android:textSize="25sp"-->
-        <!--android:layout_marginTop="50dp"-->
-        <!--android:layout_below="@+id/voltageResult"-->
-        <!--android:layout_alignStart="@+id/voltageResult"-->
-        <!--android:layout_toStartOf="@+id/measurementButton" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/resistanceResult"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Resistance"-->
-        <!--android:textColor="#0000FF"-->
-        <!--android:textSize="25sp"-->
-        <!--android:layout_below="@+id/currentResult"-->
-        <!--android:layout_marginTop="65dp"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_alignEnd="@+id/currentResult" />-->
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Switch"
+        android:id="@+id/switch1"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/measurementResult" />
 
 </RelativeLayout>

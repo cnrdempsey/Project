@@ -5,18 +5,19 @@ float r1 = 1000;
 float r2 = 460;
 float r3 = 100;
 float r4 = 330;
-int delayMs = 100; 
+int delayMs = 150; //delay 
 int ledPin = 13; // use the built in LED on pin 13 of the Uno
-String data = "";
-int dataRecievedFlag = 0;        // make sure that you return the state only once
-SoftwareSerial mySerial(10, 11); // RX, TX
+String data = ""; //data received
+int dataRecievedFlag = 0;    // boolean to showing when a message is received
+int startMeasurement = 0;   // boolean to start measurement
+float dataToSend; //message to send 
 
 void setup() {
   // sets the pins as outputs:
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, LOW);
-  Serial.begin(9600); // Default connection rate for my BT module
-  mySerial.begin(57600); // Default connection rate for my BT module
+  Serial.begin(9600); 
+  mySerial.begin(57600); // Connection rate for my BT module
   while(!Serial){
     Serial.println("--------------------");
     Serial.println("MULTIMETER");
@@ -25,27 +26,24 @@ void setup() {
   delay(2000);
 }
 
-float voltmeter(int n){
-  float valuesArr[n];
-  
+//function to measure voltage
+void voltmeter(int n){
+  Serial.println("Voltmeter Started ... ");
+   float voltAver = 0;
   for(int i =0; i < n; i++){
     float v = (analogRead(0) * vPow) / 1024.0;
     float v2 = v / (r2 / (r1 + r2));
-    valuesArr[i] = v2;
+    voltAver += v2;
     delay(delayMs);
-  }
-
-  float voltAver = 0;
-  for(int i =0; i < n; i++){
-    voltAver += valuesArr[i];
   }
   
   Serial.println("Voltage = " + (String)(voltAver/n));
-  return voltAver/10;
+  dataToSend = voltAver/n;
 }
 
-
-float ammeter(int n){
+//function to measure current
+void ammeter(int n){
+  Serial.println("Ammeter Started ... ");
   float valuesArrFirst[n];
   float valuesArrSecond[n];
   
@@ -63,34 +61,33 @@ float ammeter(int n){
   }
   
   Serial.println("Current = " + (String)(currAver/n));
-  return currAver/n;
+  dataToSend =  currAver/n;
 }
 
-float ohmmeter(int n){
-  float valuesArr[n];
-  
+//function to measure resistance
+void ohmmeter(int n){
+  Serial.println("Ohmmeter Started ... ");
+  float resAver = 0;
   for(int i =0; i < n; i++){
     float raw = analogRead(3); 
     float vout = (raw * vPow)/ 1024;
     float buffer = (vPow/vout) - 1 ;
-    float res = r4 * 1/buffer;     
-    valuesArr[i] = res;
+    float res = r4 * 1/buffer;
+    resAver += res;     
     delay(delayMs);
-  }
-
-  float resAver = 0;
-  for(int i =0; i < n; i++){
-    resAver += valuesArr[i];
   }
   
   Serial.println("Resistance = " + (String)(resAver/n));
-  return resAver/n;
+  dataToSend =  resAver/n;
 }
 
+//function to read data over the Bluetooth connection
 void readData(){
+  Serial.println("Reading ...");
   if (mySerial.available()) {
-    Serial.print("State recieved: ");
-    while(mySerial.available()) { // While there is more to be read, keep reading.
+    Serial.println("State recieved");
+    // While there is more to be read, keep reading.
+    while(mySerial.available()) { 
       data += (char)mySerial.read();
     }
     dataRecievedFlag=1;
@@ -113,50 +110,59 @@ void ledSwitch(){
   data="";    
 }
 
+//function that handles the measurement mode of the multimeter based on data sent over BT
+void switchMeasurementMode(){ 
+ 
+  Serial.write("Flag set");
+  if (data == "1") {
+    Serial.write("Voltage Measurement");
+    voltmeter(10);
+  }
+  else if (data == "2") {
+    Serial.write("Current Measurement");
+    ammeter(10);   
+  }
+  else if (data == "3") {
+    Serial.write("Resistance Measurement");
+    ohmmeter(10);   
+  }else {
+      dataRecievedFlag = 0;
+  }  
+     
+}
+
+//function that creates a message packet of 8 bytes
 String createResultString(float result){
   String tempStr = String(result, 2);
   String resultStr = "";
+  //if result string is not 8 long, leading zereos are added
   if(tempStr.length() < 8){
       for(int i = 0; i < (8 - tempStr.length()); i ++){
         resultStr += "0";
       }
-  }
-  resultStr += tempStr;
+       resultStr += tempStr;
+  }else if(tempSt.length > 9){ //if the result string is > 8 an error is generated
+     resultStr = "Error..."
+   }
   return resultStr;
 }
 
-String createFullMessage(float volt, float current, float res){
-    String mess = "#" + createResultString(volt) + "~" + createResultString(current) + "~" + createResultString(res); 
-    return mess;  
-}
-
-String createPartialMessage(float result){
-    String mess = "#" + createResultString(result); 
-    return mess;  
-}
-
-
 void loop() {
-  float voltmeterResult = voltmeter(10);
-  //float ammeterResult = ammeter(10);
- // float ohmmeterResult = ohmmeter(10);
-
+  //check for a message over the BT connection
   readData();
-
- // String data = createMessage(voltmeterResult,ammeterResult,ohmmeterResult); 
-String data = createPartialMessage(voltmeterResult);
-//  Serial.println(data.substring(1, 9));
-//  Serial.println(data.substring(10, 18));
-//  Serial.println(data.substring(19, 27));
-  
-  int str_len = data.length() + 1; 
-  char char_array[str_len];
-  data.toCharArray(char_array, str_len);
-  Serial.println(char_array);
-  mySerial.write(char_array);
-      
+  //if a message is recieved, this block is ran
   if(dataRecievedFlag == 1 ){
-    ledSwitch();
+    //calls a measurement function based on the message
+    switchMeasuremenxtMode();
+    //creates a message packet to be sent
+    String data = "#" + createResultString(dataToSend); 
+    int str_len = data.length() + 1; 
+    char char_array[str_len];
+    //converts the result string to char array to be sent
+    data.toCharArray(char_array, str_len);
+    Serial.println(char_array);
+    mySerial.write(char_array);
+    
   }
     
 }

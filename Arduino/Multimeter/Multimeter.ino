@@ -84,7 +84,6 @@ void ohmmeter(int n){
 
 //function to read data over the Bluetooth connection
 void readData(){
-  Serial.println("Reading ...");
   if (mySerial.available()) {
     Serial.println("State recieved");
     // While there is more to be read, keep reading.
@@ -114,17 +113,13 @@ void ledSwitch(){
 //function that handles the measurement mode of the multimeter based on data sent over BT
 void switchMeasurementMode(){ 
  
-  Serial.write("Flag set");
   if (data == "1") {
-    Serial.write("Voltage Measurement");
     voltmeter(10);
   }
   else if (data == "2") {
-    Serial.write("Current Measurement");
     ammeter(10);   
   }
   else if (data == "3") {
-    Serial.write("Resistance Measurement");
     ohmmeter(10);   
   }else {
       dataRecievedFlag = 0;

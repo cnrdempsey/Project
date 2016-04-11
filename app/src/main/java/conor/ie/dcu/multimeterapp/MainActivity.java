@@ -1,29 +1,38 @@
 package conor.ie.dcu.multimeterapp;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private final static int REQUEST_BLUETOOTH = 2;
 
     BluetoothConnector bluetoothConnector = null;
-    Button startMeasurementButtonVoltage, startMeasurementButtonCurrent, startMeasurementButtonResistance;
+    Button startMeasurementButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startMeasurementButtonVoltage = (Button)findViewById(R.id.measurementButtonV);
-        startMeasurementButtonCurrent = (Button)findViewById(R.id.measurementButtonC);
-        startMeasurementButtonResistance = (Button)findViewById(R.id.measurementButtonR);
 
+        FrameLayout canvasFrame = (FrameLayout)findViewById(R.id.canvasFrame);
+        DialCanvas dialCanvas = new DialCanvas(this);
+        canvasFrame.addView(dialCanvas);
+        startMeasurementButton = (Button)findViewById(R.id.measurementButton);
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         bluetoothConnector = new BluetoothConnector(this,btAdapter);
         checkBluetoothCompatibility(btAdapter);
@@ -36,17 +45,9 @@ public class MainActivity extends AppCompatActivity {
         Button measurementButton = null;
         String modeSelector = "0";
         switch (view.getId()) {
-            case R.id.measurementButtonV:
-                measurementButton = (Button)findViewById(R.id.measurementButtonV);
+            case R.id.measurementButton:
+                measurementButton = (Button)findViewById(R.id.measurementButton);
                 modeSelector = "1";
-                break;
-            case R.id.measurementButtonC:
-                measurementButton = (Button)findViewById(R.id.measurementButtonC);
-                modeSelector = "2";
-                break;
-            case R.id.measurementButtonR:
-                measurementButton = (Button)findViewById(R.id.measurementButtonR);
-                modeSelector = "3";
                 break;
         }
 
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
 }
 

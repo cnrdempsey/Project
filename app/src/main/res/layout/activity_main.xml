@@ -7,41 +7,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="conor.ie.dcu.multimeterapp.MainActivity"
-    android:background="#0b0b0b">
+    android:background="#403939">
 
     <Button
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:id="@+id/measurementButtonV"
-        android:text="@string/startMeasurementV"
+        android:id="@+id/measurementButton"
+        android:text="@string/startMeasurement"
         android:onClick="startMeasurement"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="81dp"
+        android:checked="false"
+        android:layout_below="@+id/measurementResult"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="182dp"
-        android:checked="false"/>
+        android:layout_alignParentEnd="true" />
         <!--android:thumb="@+drawable/switch_thumb"-->
         <!--android:track="@+drawable/switch_bg"-->
-
-    <Button
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/measurementButtonC"
-        android:text="@string/startMeasurementC"
-        android:onClick="startMeasurement"
-        android:checked="false"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/measurementButtonR"
-        android:text="@string/startMeasurementR"
-        android:onClick="startMeasurement"
-        android:checked="false"
-        android:layout_marginTop="43dp"
-        android:layout_below="@+id/measurementButtonC"
-        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/measurementResult"
@@ -49,18 +29,21 @@
         android:layout_height="wrap_content"
         android:text="Result"
         android:textColor="#2a8000"
-        android:textSize="55sp"
+        android:textSize="75sp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textView"
-        android:layout_alignBottom="@+id/measurementButtonR"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="338dp" />
+        android:layout_alignParentEnd="true" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/measurementButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/canvasFrame">
+
+    </FrameLayout>
+
 
 </RelativeLayout>

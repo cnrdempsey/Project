@@ -11,6 +11,7 @@ String data = ""; //data received
 int dataRecievedFlag = 0;    // boolean to showing when a message is received
 int startMeasurement = 0;   // boolean to start measurement
 float dataToSend; //message to send 
+SoftwareSerial mySerial(10, 11);
 
 void setup() {
   // sets the pins as outputs:
@@ -141,9 +142,9 @@ String createResultString(float result){
         resultStr += "0";
       }
        resultStr += tempStr;
-  }else if(tempSt.length > 9){ //if the result string is > 8 an error is generated
-     resultStr = "Error..."
-   }
+  }else if(tempStr.length() > 9){ //if the result string is > 8 an error is generated
+     resultStr = "Error...";
+  }
   return resultStr;
 }
 
@@ -153,7 +154,7 @@ void loop() {
   //if a message is recieved, this block is ran
   if(dataRecievedFlag == 1 ){
     //calls a measurement function based on the message
-    switchMeasuremenxtMode();
+    switchMeasurementMode();
     //creates a message packet to be sent
     String data = "#" + createResultString(dataToSend); 
     int str_len = data.length() + 1; 

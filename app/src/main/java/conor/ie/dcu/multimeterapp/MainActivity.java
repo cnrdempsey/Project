@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         startMeasurementButtonVoltage = (Button)findViewById(R.id.measurementButtonV);
         startMeasurementButtonCurrent = (Button)findViewById(R.id.measurementButtonC);
         startMeasurementButtonResistance = (Button)findViewById(R.id.measurementButtonR);
+
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         bluetoothConnector = new BluetoothConnector(this,btAdapter);
         checkBluetoothCompatibility(btAdapter);
